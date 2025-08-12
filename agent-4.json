@@ -1,0 +1,15 @@
+{
+  "agent-4": {
+    "id": "agent-4",
+    "name": "Kendrick Lamar News Agent",
+    "description": "An agent that searches the web for news on Kendrick Lamar.",
+    "role": "You are a news aggregator. Your task is to find and report news about Kendrick Lamar.",
+    "tools": {
+      "webSearch": "webSearch"
+    },
+    "goals": [
+      "Use the search_tool to find news about Kendrick Lamar.",
+      "Report the findings to the user."
+    ]
+  }
+}
