@@ -4,6 +4,7 @@ import { webSearchTool } from '@virtron/agency-tools';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { readFile } from 'fs/promises';
 
 // Load environment variables
 dotenv.config();
@@ -30,11 +31,25 @@ async function runTeam() {
         const teamFactory = new TeamFactory({ agentFactory });
 
         // Load the team configuration
-        const teamConfig = JSON.parse(await readFile(new URL(path.join(__dirname, 'team3.json')), 'utf8'));
+        const teamConfig = JSON.parse(await readFile(path.join(__dirname, 'team3.json'), 'utf8'));
         const team = teamFactory.createTeamFromConfig(teamConfig, 'content-creation-team');
 
-        // Run the team
-        const results = await team.run();
+        // Import the Agency class
+        const { Agency } = await import('@virtron/agency/Agency.js');
+
+        // Create a real Agency object
+        const agency = new Agency({
+            name: 'Content Creation Agency',
+            description: 'An agency for managing content creation teams and jobs.'
+        });
+
+        // Add agents to the agency
+        Object.values(team.agents).forEach(agent => {
+            agency.addAgent(agent.id, agent);
+        });
+
+        // Run the team with context including the real agency
+        const results = await team.run({}, { agency });
         console.log('Team Results:', results);
 
     } catch (error) {

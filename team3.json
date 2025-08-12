@@ -44,7 +44,7 @@
           "agent": "writer-agent",
           "description": "Write an article based on the research from the 'research-job'.",
           "inputs": {
-            "research": "{{research-job.output}}"
+            "research": "{{research-job}}"
           }
         }
       },
