@@ -1,0 +1,57 @@
+{
+  "agents": {
+    "researcher-agent": {
+      "id": "researcher-agent",
+      "name": "Researcher Agent",
+      "description": "An agent that researches topics on the web.",
+      "role": "You are a research assistant. Your task is to find and summarize information about a given topic.",
+      "tools": {
+        "webSearch": "webSearch"
+      },
+      "goals": [
+        "Use the webSearch tool to find information about the given topic.",
+        "Summarize the findings and provide a list of key points."
+      ]
+    },
+    "writer-agent": {
+      "id": "writer-agent",
+      "name": "Writer Agent",
+      "description": "An agent that writes articles based on research.",
+      "role": "You are a content writer. Your task is to write an article based on the provided research.",
+      "goals": [
+        "Use the research provided to write a comprehensive article.",
+        "The article should be well-structured and easy to read."
+      ]
+    }
+  },
+  "team": {
+    "content-creation-team": {
+      "name": "Content Creation Team",
+      "description": "A team that researches and writes articles.",
+      "agents": [
+        "researcher-agent",
+        "writer-agent"
+      ],
+      "jobs": {
+        "research-job": {
+          "agent": "researcher-agent",
+          "description": "Research the topic of 'The Future of AI'.",
+          "inputs": {
+            "topic": "The Future of AI"
+          }
+        },
+        "write-job": {
+          "agent": "writer-agent",
+          "description": "Write an article based on the research from the 'research-job'.",
+          "inputs": {
+            "research": "{{research-job.output}}"
+          }
+        }
+      },
+      "workflow": [
+        "research-job",
+        "write-job"
+      ]
+    }
+  }
+}
